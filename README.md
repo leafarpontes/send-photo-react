@@ -1,6 +1,11 @@
 # Envio de Fotos - React
 
-Antes de testar, tenha certeza de que a ![API do backend](https://github.com/leafarpontes/send-photo-api-java-spring) está rodando em http://localhost:8080 <br>
+Frameworks e bibliotecas usadas:
+- [React](https://reactjs.org) 
+- [Bulma](https://bulma.io)
+- [React Icons](https://react-icons.github.io/react-icons)
+
+Antes de testar, tenha certeza de que a [API do backend](https://github.com/leafarpontes/send-photo-api-java-spring) está rodando em http://localhost:8080 <br>
 Endpoint de envio de fotos: http://localhost:8080/foto
 
 ## Como rodar o projeto
