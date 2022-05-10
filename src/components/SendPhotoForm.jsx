@@ -34,7 +34,7 @@ export function SendPhotoForm({ handleShowImage }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: Math.floor(Math.random() * 1000),
+          id: Math.floor(Math.random() * 1000) + 1,
           photo: photo,
         }),
       });
