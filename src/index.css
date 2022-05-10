@@ -1,0 +1,20 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card {
+  width: 430px;
+}
+
+.country-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.subfooter-p {
+  font-size: 0.8rem;
+  padding: 0.45rem !important;
+}
