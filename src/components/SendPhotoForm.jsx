@@ -5,6 +5,7 @@ import { FaUpload } from "react-icons/fa";
 export function SendPhotoForm({ handleShowImage }) {
   const [photo, setPhoto] = useState("");
   const [message, setMessage] = useState("");
+  const [isUploadDone, setIsUploadDone] = useState("");
   const [fileName, setFileName] = useState("");
 
   const getBase64 = (file) => {
@@ -29,29 +30,31 @@ export function SendPhotoForm({ handleShowImage }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:8080/foto", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: Math.floor(Math.random() * 1000) + 1,
-          photo: photo,
-        }),
+    await fetch("http://localhost:8080/foto", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: Math.floor(Math.random() * 1000) + 1,
+        photo: photo,
+      }),
+    })
+      .then((response) => {
+        if (response.status >= 200 && response.status <= 299) {
+          setIsUploadDone("ok");
+          return response.json();
+        } else {
+          throw Error(response.statusText);
+        }
+      })
+      .then((jsonResponse) => {
+        // do whatever you want with the JSON response
+        console.log(jsonResponse);
+      })
+      .catch((error) => {
+        // Handle the error
+        setIsUploadDone("error");
+        console.log(error);
       });
-
-      console.log("RES Status: ", res.status);
-      let resJson = await res.json();
-      console.log(resJson);
-
-      if (res.status === 201) {
-        setMessage("Foto enviada com sucesso!");
-      } else {
-        setMessage("Algum erro aconteceu.");
-      }
-      
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   return (
@@ -81,11 +84,24 @@ export function SendPhotoForm({ handleShowImage }) {
         </button>
       </div>
 
-      {message && (
+      {isUploadDone === "ok" ? (
         <div className="notification is-success mt-3">
-          <button className="delete" onClick={() => setMessage("")}></button>
-          {message}
+          <button
+            className="delete"
+            onClick={() => setIsUploadDone("")}
+          ></button>
+          <p>Foto enviada com sucesso!</p>
         </div>
+      ) : (
+        isUploadDone === "error" && (
+          <div className="notification is-danger mt-3">
+            <button
+              className="delete"
+              onClick={() => setIsUploadDone("")}
+            ></button>
+            <p>Erro ao enviar foto!</p>
+          </div>
+        )
       )}
     </form>
   );
